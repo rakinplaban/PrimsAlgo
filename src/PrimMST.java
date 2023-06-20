@@ -5,9 +5,9 @@ public class PrimMST {
     private int r;
     private Map<Integer, Character> node = new HashMap<>();
     private Map<Character, Integer> T_ = new HashMap<>();
-    private Map<Character, Character> parent = new HashMap<>();
     private Map<Character, Integer> key = new HashMap<>();
-    private Queue<Character> Q = new PriorityQueue<>(Comparator.comparingInt(key::get));
+    private Map<Character, Character> parent = new HashMap<>();
+    private PriorityQueue<Character> Q = new PriorityQueue<>(Comparator.comparingInt(key::get));
 
     public PrimMST(int[][] graph, int r) {
         this.graph = graph;
@@ -17,8 +17,7 @@ public class PrimMST {
     }
 
     private void initializeNode() {
-        int numNodes = graph.length;
-        for (int i = 0; i < numNodes; i++) {
+        for (int i = 0; i < graph.length; i++) {
             char nodeName = (char) ('A' + i);
             node.put(i, nodeName);
         }
@@ -50,16 +49,15 @@ public class PrimMST {
         }
 
         // Print the minimum spanning tree
-        System.out.println("Minimum Spanning Tree:");
-        for (char nodeChar : node.values()) {
-            if (parent.get(nodeChar) != null) {
-                System.out.println(parent.get(nodeChar) + " - " + nodeChar);
-            }
-        }
+        System.out.println("V " + node.values());
+        System.out.println("T " + T_.values());
+        System.out.println("Key " + key.values());
+        System.out.println("p " + parent.values());
     }
 
-    private char extractMin(Queue<Character> q) {
+    private char extractMin(PriorityQueue<Character> q) {
         char minNode = q.poll();
         return minNode;
     }
+
 }
