@@ -18,8 +18,7 @@ public class PrimMST {
 
     private void initializeNode() {
         for (int i = 0; i < graph.length; i++) {
-            char nodeName = (char) ('A' + i);
-            node.put(i, nodeName);
+            node.put(i, (char) ('A' + i));
         }
     }
 
@@ -60,4 +59,19 @@ public class PrimMST {
         return minNode;
     }
 
+    public static void main(String[] args) {
+        int[][] graph = {
+            {0, 4, 0, 0, 0, 0, 0, 8, 0},
+            {4, 0, 8, 0, 0, 0, 0, 11, 0},
+            {0, 8, 0, 7, 0, 4, 0, 0, 2},
+            {0, 0, 7, 0, 9, 14, 0, 0, 0},
+            {0, 0, 0, 9, 0, 10, 0, 0, 0},
+            {0, 0, 4, 14, 10, 0, 2, 0, 0},
+            {8, 11, 0, 0, 0, 0, 0, 1, 6},
+            {0, 0, 2, 0, 0, 0, 6, 7, 0}
+        };
+
+        PrimMST mst = new PrimMST(graph, 0);
+        mst.minimumSpanningTree();
+    }
 }
