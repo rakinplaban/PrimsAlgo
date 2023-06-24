@@ -2,11 +2,11 @@ import java.util.*;
 
 public class PrimMST {
 	private int[][] graph;
-	private char[] vertics;
+	private char[] vertics = new char[9];
 	private Queue<Character> Q = new PriorityQueue<Character>();
-	private int[] traverse;
-	private int[] key;
-	private char[] parent;
+	private int[] traverse = new int[9];
+	private int[] key = new int[9];
+	private char[] parent = new char[9];
 	private char src;
 	
 	public PrimMST(int[][] graph,char[] vertics,char src) {
@@ -14,6 +14,7 @@ public class PrimMST {
 		this.vertics = vertics;
 		this.src = src;
 	}
+	
 	
 	private int srcPosition(char src_node) {
 		int idx = 0;
@@ -25,42 +26,64 @@ public class PrimMST {
 		return idx;
 	}
 	
-	public void minimumSpanningTree() {
+	public void initialize() {
 		for(int i=0;i<vertics.length;i++) {
 			Q.add(vertics[i]);
-		}
-		
-		for(int u=0;u<Q.size();u++) {
-			key[u] = Integer.MAX_VALUE;
-		}
-		
-//		Q.remove(src);
-		key[srcPosition(src)] = 0;
-		parent[srcPosition(src)] = ' ';
-		
-		while(!Q.isEmpty()) {
-			char u = ExtractMin();
-			Q.remove(u);
-			
-			for(int v=0;v<vertics.length;v++) {
-				if(Q.contains(vertics[v]) && graph[srcPosition(u)][v] != 0) {
-					parent[v] = u;
-				}
-			}
+			key[i] = Integer.MAX_VALUE;
+			parent[i] = ' ';
 		}
 	}
 	
-	public char ExtractMin() {
+	public void minimumSpanningTree() {
+		initialize();
+		
+		
+		key[srcPosition(src)] = 0;
+		
+//		traverse[srcPosition(src)] = 1;
+//		Q.remove(src);
+//		char source = src;
+		
+		while(!Q.isEmpty()) {
+			char u = ExtractMin(src);
+//			Q.remove(u);
+			traverse[srcPosition(u)] = 1;
+			
+			for(int v=0;v<vertics.length;v++) {
+				if(traverse[v] == 0 && graph[srcPosition(u)][v] < key[v] && graph[srcPosition(u)][v]!=0) {
+					parent[v] = u;
+					key[v] = graph[srcPosition(u)][v];
+//					traverse[v] = 1;
+				}
+				System.out.println("V = " + vertics[v]);
+	            System.out.println("T = " + traverse[v]);
+	            System.out.println("key = " + key[v]);
+	            System.out.println("parent = " + parent[v]);
+			}
+//			source = u;
+		}
+		
+		for (int i=0;i<vertics.length;i++) {
+            System.out.println("V = " + vertics[i]);
+            System.out.println("T = " + traverse[i]);
+            System.out.println("key = " + key[i]);
+            System.out.println("parent = " + parent[i]);
+        }
+		
+	}
+	
+	public char ExtractMin(char source) {
 		int min_value = Integer.MAX_VALUE;
 		char node = ' ';
 		for(char v : Q) {
 			int idx = srcPosition(v);
-			if(key[idx] < min_value) {
-				min_value = key[idx];
+			if(graph[srcPosition(source)][idx] < min_value && graph[srcPosition(source)][idx]!=0) {
+				min_value = graph[srcPosition(source)][idx];
 				node = v;
 			}
 		}
 		
 		return node;
 	}
+	
 }
