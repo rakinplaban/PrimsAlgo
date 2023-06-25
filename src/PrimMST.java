@@ -42,19 +42,20 @@ public class PrimMST {
 		}
 		Q.add(srcPosition(src));
 		key[srcPosition(src)] = 0;
+		
 		while (!Q.isEmpty()) {
 	        int u = ExtractMin();
-	        
+	        traverse[u] = 1;
 
 	        for (int v = 0; v < vertics.length; v++) {
-	            if(graph[u][v]!=0) {
-	            	if (graph[u][v] < key[v]) {
-	            		parent[v] = idx_To_Node(u);
-	            		key[v] = graph[u][v];
-	            	}
-
-	            	Q.add(v);
+//	            if(graph[u][v]!=0) {
+	            if (graph[u][v] < key[v]) {
+	            	parent[v] = idx_To_Node(u);
+	            	key[v] = graph[u][v];
 	            }
+
+//	            	Q.add(v);
+//	            }
 	        
 				System.out.println("V = " + vertics[v]);
 	            System.out.println("T = " + traverse[v]);
@@ -80,8 +81,12 @@ public class PrimMST {
 	    for (int v : Q) {
 	        if (key[v] < min_value) {
 	            min_value = key[v];
-	            node = Q.poll();
+	            node = v;
 	        }
+	    }
+	    
+	    if(node!=-1) {
+	    	Q.remove(node);
 	    }
 
 	    return node;
