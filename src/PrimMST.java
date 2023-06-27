@@ -21,7 +21,7 @@ public class PrimMST {
 				return i;
 			}
 		}
-		return -1; // Return -1 if source node is not found
+		return -1; 
 	}
 	
 	private char idxToNode(int idx) {
